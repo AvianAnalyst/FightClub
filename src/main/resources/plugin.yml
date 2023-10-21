@@ -1,0 +1,4 @@
+name: FightClub
+version: '${project.version}'
+main: digital.byrd.fightclub.FightClub
+load: STARTUP
