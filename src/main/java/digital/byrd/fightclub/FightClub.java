@@ -1,15 +1,7 @@
 package digital.byrd.fightclub;
 
-import org.apache.commons.lang.reflect.FieldUtils;
-import org.bukkit.Material;
+import digital.byrd.fightclub.commands.Murder;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.FileUtil;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public final class FightClub extends JavaPlugin {
 
@@ -17,6 +9,7 @@ public final class FightClub extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         getLogger().info("finally");
+        this.getCommand("murder").setExecutor(new Murder());
     }
 
     @Override

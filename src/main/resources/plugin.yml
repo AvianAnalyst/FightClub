@@ -2,3 +2,8 @@ name: FightClub
 version: '${project.version}'
 main: digital.byrd.fightclub.FightClub
 load: STARTUP
+commands:
+  murder:
+    description: Start killing dave
+    usage: /murder
+    permission: true
