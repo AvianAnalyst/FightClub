@@ -16,6 +16,7 @@ import static org.bukkit.Bukkit.getLogger;
 
 public class Listener implements org.bukkit.event.Listener {
     private InitialGenerator inventoryGenerator = new InitialGenerator();
+    private FightClub thisPlugin = FightClub.getPlugin(FightClub.class);
     private DropGenerator dropGenerator = new DropGenerator();
     private Utils utils = new Utils();
 
@@ -23,17 +24,12 @@ public class Listener implements org.bukkit.event.Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        logger.info("heard death");
         Player player = event.getEntity();
         PlayerInventory inventory = player.getInventory();
         List<ItemStack> desiredDrops = dropGenerator.chooseDrops(utils.itemStacksToList(inventory.getContents()));
-        logger.warning(desiredDrops.toString());
-        logger.warning("clearing desiredDrops");
         List<ItemStack> drops = event.getDrops();
         drops.clear();
         drops.addAll(desiredDrops);
-
-        logger.warning("Cleared desiredDrops");
-//        inventory.setContents(utils.itemStacksToArr(desiredDrops));
+        thisPlugin.removeKittedPlayer(player.getUniqueId());
     }
 }
