@@ -3,6 +3,7 @@ package digital.byrd.fightclub.generator;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+
 import static org.bukkit.Bukkit.getLogger;
 
 import java.util.ArrayList;
@@ -22,14 +23,19 @@ public class DropGenerator {
     public List<ItemStack> chooseDrops(List<ItemStack> inventory) {
         Map<Integer, List<ItemStack>> sortedItems = sortItems(inventory);
         logger.info(String.valueOf(sortedItems.size()));
-
         Integer highestTier = sortedItems.keySet().stream().mapToInt(v -> v).max().orElse(0);
         List<ItemStack> highestTierItems = sortedItems.get(highestTier);
+        if (highestTierItems == null) {
+            return Arrays.asList(
+                    new ItemStack(Material.ARROW, 32),
+                    new ItemStack(Material.GOLDEN_APPLE, rand.nextInt(2) + 1)
+                            );
+        }
         ItemStack gear1 = null;
         if (highestTierItems.size() > 0) {
             gear1 = highestTierItems.get(rand.nextInt(highestTierItems.size()));
+            sortedItems.get(highestTier).remove(gear1);
         }
-        sortedItems.get(highestTier).remove(gear1);
 
         List<ItemStack> allItems = sortedItems.keySet().stream()
                 .map(sortedItems::get)
@@ -63,7 +69,7 @@ public class DropGenerator {
             } else {
                 return;
             }
-            if (sortedItems.containsKey(tier)){
+            if (sortedItems.containsKey(tier)) {
                 List<ItemStack> list = sortedItems.get(tier);
                 list.add(itemStack);
             } else {
