@@ -3,22 +3,32 @@ package digital.byrd.fightclub.generator;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import static org.bukkit.Bukkit.getLogger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class DropGenerator {
     private final Random rand = new Random();
+    private final Logger logger = getLogger();
 
     public List<ItemStack> chooseDrops(List<ItemStack> inventory) {
         Map<Integer, List<ItemStack>> sortedItems = sortItems(inventory);
+        logger.info(String.valueOf(sortedItems.size()));
+
         Integer highestTier = sortedItems.keySet().stream().mapToInt(v -> v).max().orElse(0);
         List<ItemStack> highestTierItems = sortedItems.get(highestTier);
-        ItemStack gear1 = highestTierItems.get(rand.nextInt(highestTierItems.size()));
+        ItemStack gear1 = null;
+        if (highestTierItems.size() > 0) {
+            gear1 = highestTierItems.get(rand.nextInt(highestTierItems.size()));
+        }
         sortedItems.get(highestTier).remove(gear1);
 
         List<ItemStack> allItems = sortedItems.keySet().stream()
@@ -26,7 +36,10 @@ public class DropGenerator {
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 
-        ItemStack gear2 = allItems.get(rand.nextInt(allItems.size()));
+        ItemStack gear2 = null;
+        if (allItems.size() > 0) {
+            gear2 = allItems.get(rand.nextInt(allItems.size()));
+        }
         return Arrays.asList(
                 new ItemStack(Material.ARROW, 32),
                 new ItemStack(Material.GOLDEN_APPLE, rand.nextInt(2) + 1),
@@ -36,9 +49,13 @@ public class DropGenerator {
     }
 
     private Map<Integer, List<ItemStack>> sortItems(List<ItemStack> inventory) {
+
         Map<Integer, List<ItemStack>> sortedItems = new HashMap<>();
         inventory.forEach(itemStack -> {
             Integer tier;
+            if (itemStack == null) {
+                return;
+            }
             if (itemStack.getType().equals(Material.BOW)) {
                 tier = determineBowTier(itemStack);
             } else if (isArmor(itemStack) || isSword(itemStack)) {
@@ -47,9 +64,10 @@ public class DropGenerator {
                 return;
             }
             if (sortedItems.containsKey(tier)){
-                sortedItems.get(tier).add(itemStack);
+                List<ItemStack> list = sortedItems.get(tier);
+                list.add(itemStack);
             } else {
-                sortedItems.put(tier, Arrays.asList(itemStack));
+                sortedItems.put(tier, new ArrayList<>(Collections.singletonList(itemStack)));
             }
         });
         return sortedItems;

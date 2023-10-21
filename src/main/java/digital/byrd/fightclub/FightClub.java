@@ -10,6 +10,7 @@ public final class FightClub extends JavaPlugin {
         // Plugin startup logic
         getLogger().info("finally");
         this.getCommand("murder").setExecutor(new Murder());
+        getServer().getPluginManager().registerEvents(new Listener(), this);
     }
 
     @Override
