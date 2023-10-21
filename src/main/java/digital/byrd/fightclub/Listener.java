@@ -6,6 +6,7 @@ import digital.byrd.fightclub.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -24,12 +25,16 @@ public class Listener implements org.bukkit.event.Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        Player player = event.getEntity();
-        PlayerInventory inventory = player.getInventory();
-        List<ItemStack> desiredDrops = dropGenerator.chooseDrops(utils.itemStacksToList(inventory.getContents()));
+        thisPlugin.removeKittedPlayer(event.getEntity().getUniqueId());
         List<ItemStack> drops = event.getDrops();
+        List<ItemStack> desiredDrops = dropGenerator.chooseDrops(drops);
         drops.clear();
         drops.addAll(desiredDrops);
-        thisPlugin.removeKittedPlayer(player.getUniqueId());
+    }
+
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
+
+//        Player player = event.getEntity();
     }
 }

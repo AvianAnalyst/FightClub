@@ -20,8 +20,8 @@ public class DropGenerator {
     private final Random rand = new Random();
     private final Logger logger = getLogger();
 
-    public List<ItemStack> chooseDrops(List<ItemStack> inventory) {
-        Map<Integer, List<ItemStack>> sortedItems = sortItems(inventory);
+    public List<ItemStack> chooseDrops(List<ItemStack> drops) {
+        Map<Integer, List<ItemStack>> sortedItems = sortItems(drops);
         logger.info(String.valueOf(sortedItems.size()));
         Integer highestTier = sortedItems.keySet().stream().mapToInt(v -> v).max().orElse(0);
         List<ItemStack> highestTierItems = sortedItems.get(highestTier);
