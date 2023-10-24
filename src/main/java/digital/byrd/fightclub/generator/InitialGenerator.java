@@ -1,8 +1,11 @@
 package digital.byrd.fightclub.generator;
 
+import digital.byrd.fightclub.commands.Murder;
+import digital.byrd.fightclub.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +19,7 @@ import java.util.stream.Stream;
 
 public class InitialGenerator {
     private final Random rand = new Random();
+    private Utils utils = new Utils();
 
     public List<ItemStack> makeInitialStorageInventory() {
         List<ItemStack> weapons = this.makeWeapons();
@@ -79,5 +83,17 @@ public class InitialGenerator {
             return  new ItemStack(opt1);
         }
         return new ItemStack(opt2);
+    }
+
+    public void setInventory(PlayerInventory inventory) {
+        List<ItemStack> newItems = makeInitialStorageInventory();
+        // set armor slots
+        Map<String, ItemStack> armor = makeArmor();
+        inventory.setHelmet(armor.get("helm"));
+        inventory.setChestplate(armor.get("chestplate"));
+        inventory.setLeggings(armor.get("leggings"));
+        inventory.setBoots(armor.get("boots"));
+        // collect the rest
+        inventory.setContents(utils.itemStacksToArr(newItems));
     }
 }

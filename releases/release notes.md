@@ -7,7 +7,7 @@
   * efficiency 1 diamond tool set + water bucket
 * Place armor in slots on inventory generation
 * /murder now heals you 
-* TODO: You don't need to manually call /murder when you respawn anymore
+* You don't need to manually call /murder when you respawn anymore
 * Equipment enchantments rebalancing
   * TODO: No longer able to get enchantments > level 2 on initial inventory generation
   * TODO: players now drop 10 xp on death

@@ -19,9 +19,6 @@ public class Listener implements org.bukkit.event.Listener {
     private InitialGenerator inventoryGenerator = new InitialGenerator();
     private FightClub thisPlugin = FightClub.getPlugin(FightClub.class);
     private DropGenerator dropGenerator = new DropGenerator();
-    private Utils utils = new Utils();
-
-    private Logger logger = getLogger();
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
@@ -34,7 +31,8 @@ public class Listener implements org.bukkit.event.Listener {
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-
-//        Player player = event.getEntity();
+        Player player = event.getPlayer();
+        inventoryGenerator.setInventory(player.getInventory());
+        thisPlugin.addKittedPlayer(player.getUniqueId());
     }
 }
