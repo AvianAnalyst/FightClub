@@ -1,11 +1,11 @@
 # 0.2.0
 ## Feature updates
 * Switch to semantic versioning
-* IN PROGRESS: Add additional items to /murder inventory generation
+* Add additional items to /murder inventory generation
   * 1 stack cobblestone
   * 1 stack of golden carrots
-  * TODO: efficiency 1 diamond tool set
-* TODO: Place armor in slots on inventory generation
+  * efficiency 1 diamond tool set + water bucket
+* Place armor in slots on inventory generation
 * TODO: /murder now heals you 
 * TODO: You don't need to manually call /murder when you respawn anymore
 * Equipment enchantments rebalancing
@@ -15,6 +15,6 @@
   * TODO: Players drop half their iron on death
   * TOOD: Players also get a crafting bench 
 ## Bug fixes
-* TODO: armor slots dont clear on /murder 
+* armor slots dont clear on /murder 
 * /murder no longer requires OP permissions
     

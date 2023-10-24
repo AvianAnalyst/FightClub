@@ -7,7 +7,9 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,18 +17,22 @@ import java.util.stream.Stream;
 public class InitialGenerator {
     private final Random rand = new Random();
 
-    public List<ItemStack> makeInitialInventory() {
-        List<ItemStack> armor = this.makeArmor();
+    public List<ItemStack> makeInitialStorageInventory() {
         List<ItemStack> weapons = this.makeWeapons();
         List<ItemStack> tools = this.makeTools();
-        List<ItemStack> resources = Arrays.asList(
-                new ItemStack(Material.ARROW, 64),
-                new ItemStack(Material.GOLDEN_APPLE, rand.nextInt(2) + 1),
-                new ItemStack(Material.GOLDEN_CARROT, 64),
-                new ItemStack(Material.COBBLESTONE, 64)
-        );
-        return Stream.of(armor, weapons, tools, resources).flatMap(Collection::stream).collect(Collectors.toList());
+        List<ItemStack> resources = makeResources();
+        return Stream.of(weapons, tools, resources)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
 
+
+    private List<ItemStack> makeResources() {
+        ItemStack food =  new ItemStack(Material.GOLDEN_CARROT, 64);
+        ItemStack ammo = new ItemStack(Material.ARROW, 64);
+        ItemStack blocks =  new ItemStack(Material.COBBLESTONE, 64);
+        ItemStack gapples = new ItemStack(Material.GOLDEN_APPLE, rand.nextInt(2) + 1);
+        return Arrays.asList(food, ammo, blocks, gapples);
     }
 
     private List<ItemStack> makeTools() {
@@ -34,7 +40,7 @@ public class InitialGenerator {
         ItemStack axe = new ItemStack(Material.DIAMOND_AXE);
         ItemStack shovel = new ItemStack(Material.DIAMOND_SPADE);
         List<ItemStack> tools = new ArrayList<>(Arrays.asList(pick, axe, shovel));
-        tools.stream().forEach(tool -> {
+        tools.forEach(tool -> {
             tool.addEnchantment(Enchantment.DIG_SPEED, 1);
         });
         ItemStack waterBucket = new ItemStack(Material.WATER_BUCKET);
@@ -52,14 +58,13 @@ public class InitialGenerator {
         return Arrays.asList(bow, sword);
     }
 
-    private List<ItemStack> makeArmor() {
-        List<ItemStack> armor = Arrays.asList(
-                chooseOne(Material.DIAMOND_HELMET, Material.IRON_HELMET),
-                chooseOne(Material.DIAMOND_LEGGINGS, Material.IRON_LEGGINGS),
-                chooseOne(Material.DIAMOND_CHESTPLATE, Material.IRON_CHESTPLATE),
-                chooseOne(Material.DIAMOND_BOOTS, Material.IRON_BOOTS)
-                );
-        armor.forEach(item -> {
+    public Map<String, ItemStack> makeArmor() {
+        Map<String, ItemStack> armor = new HashMap<>();
+        armor.put("helm", chooseOne(Material.DIAMOND_HELMET, Material.IRON_HELMET));
+        armor.put("leggings", chooseOne(Material.DIAMOND_LEGGINGS, Material.IRON_LEGGINGS));
+        armor.put("chestplate", chooseOne(Material.DIAMOND_CHESTPLATE, Material.IRON_CHESTPLATE));
+        armor.put("boots", chooseOne(Material.DIAMOND_BOOTS, Material.IRON_BOOTS));
+        armor.values().forEach(item -> {
             if (rand.nextInt(2) == 0) {
                 item.addEnchantment(Enchantment.PROTECTION_PROJECTILE, rand.nextInt(3) + 1);
             } else {
