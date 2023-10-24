@@ -6,4 +6,3 @@ commands:
   murder:
     description: Start killing dave
     usage: /murder
-    permission: true
