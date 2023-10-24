@@ -7,10 +7,12 @@
   * TODO: 1 stack of golden carrots
 * TODO: /murder now heals you 
 * TODO: You don't need to manually call /murder when you respawn anymore
-* Inventory generation rebalancing
-  * TODO: No longer able to get > tier 2 items on initial inventory generation
-  * TODO: players now drop {XP_AMOUUNT} xp on death
-  * TODO: Players also have a {CHANCE} chance of dropping an anvil 
+* Equipment enchantments rebalancing
+  * TODO: No longer able to get enchantments > level 2 on initial inventory generation
+  * TODO: players now drop 10 xp on death
+  * TODO: Players also get 6 iron on initial inventory generation 
+  * TODO: Players drop half their iron on death
+  * TOOD: Players also get a crafting bench 
 ## Bug fixes
 * TODO: armor slots dont clear on /murder 
 * TODO: /murder no longer requires OP permissions
