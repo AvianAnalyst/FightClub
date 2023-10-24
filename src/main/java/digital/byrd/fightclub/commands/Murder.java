@@ -44,6 +44,8 @@ public class Murder implements CommandExecutor {
 
 
         inventory.setContents(utils.itemStacksToArr(newItems));
+        player.setHealth(20);
+        player.setFoodLevel(20);
         thisPlugin.addKittedPlayer(player.getUniqueId());
         return true;
     }
