@@ -5,6 +5,7 @@
   * TODO: 1 stack cobblestone
   * TODO: efficiency 1 diamond tool set
   * TODO: 1 stack of golden carrots
+* TODO: Place armor in slots on inventory generation
 * TODO: /murder now heals you 
 * TODO: You don't need to manually call /murder when you respawn anymore
 * Equipment enchantments rebalancing
