@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -17,12 +18,28 @@ public class InitialGenerator {
     public List<ItemStack> makeInitialInventory() {
         List<ItemStack> armor = this.makeArmor();
         List<ItemStack> weapons = this.makeWeapons();
+        List<ItemStack> tools = this.makeTools();
         List<ItemStack> resources = Arrays.asList(
                 new ItemStack(Material.ARROW, 64),
-                new ItemStack(Material.GOLDEN_APPLE, rand.nextInt(2) + 1)
+                new ItemStack(Material.GOLDEN_APPLE, rand.nextInt(2) + 1),
+                new ItemStack(Material.GOLDEN_CARROT, 64),
+                new ItemStack(Material.COBBLESTONE, 64)
         );
         return Stream.of(armor, weapons, resources).flatMap(Collection::stream).collect(Collectors.toList());
 
+    }
+
+    private List<ItemStack> makeTools() {
+        ItemStack pick = new ItemStack(Material.DIAMOND_PICKAXE);
+        ItemStack axe = new ItemStack(Material.DIAMOND_AXE);
+        ItemStack shovel = new ItemStack(Material.DIAMOND_SPADE);
+        List<ItemStack> tools = new ArrayList<>(Arrays.asList(pick, axe, shovel));
+        tools.stream().forEach(tool -> {
+            tool.addEnchantment(Enchantment.DIG_SPEED, 1);
+        });
+        ItemStack waterBucket = new ItemStack(Material.WATER_BUCKET);
+        tools.add(waterBucket);
+        return tools;
     }
 
     private List<ItemStack> makeWeapons() {

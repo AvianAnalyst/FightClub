@@ -1,5 +1,6 @@
 package digital.byrd.fightclub.commands;
 
+import static org.bukkit.Bukkit.getLogger;
 import digital.byrd.fightclub.FightClub;
 import digital.byrd.fightclub.generator.InitialGenerator;
 import digital.byrd.fightclub.utils.Utils;
@@ -11,11 +12,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Murder implements CommandExecutor {
     private FightClub thisPlugin = FightClub.getPlugin(FightClub.class);
     private InitialGenerator inventoryGenerator = new InitialGenerator();
     private Utils utils = new Utils();
+    private Logger logger = getLogger();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
         if (!(sender instanceof Player)) {
@@ -28,6 +31,8 @@ public class Murder implements CommandExecutor {
         }
         PlayerInventory inventory = player.getInventory();
         List<ItemStack> newItems = inventoryGenerator.makeInitialInventory();
+        logger.info("New items below");
+        logger.info(newItems.toString());
         inventory.setContents(utils.itemStacksToArr(newItems));
         thisPlugin.addKittedPlayer(player.getUniqueId());
         return true;
