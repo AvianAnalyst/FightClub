@@ -25,7 +25,7 @@ public class InitialGenerator {
                 new ItemStack(Material.GOLDEN_CARROT, 64),
                 new ItemStack(Material.COBBLESTONE, 64)
         );
-        return Stream.of(armor, weapons, resources).flatMap(Collection::stream).collect(Collectors.toList());
+        return Stream.of(armor, weapons, tools, resources).flatMap(Collection::stream).collect(Collectors.toList());
 
     }
 
