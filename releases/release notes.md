@@ -4,7 +4,7 @@
 * TODO: Add additional items to /murder inventory generation
   * TODO: 1 stack cobblestone
   * TODO: efficiency 1 diamond tool set
-  * TODO: 1 stack of {FOOD}
+  * TODO: 1 stack of golden carrots
 * TODO: /murder now heals you 
 * TODO: You don't need to manually call /murder when you respawn anymore
 * Inventory generation rebalancing
