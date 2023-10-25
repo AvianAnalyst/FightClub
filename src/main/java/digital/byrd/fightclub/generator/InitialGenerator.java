@@ -1,6 +1,5 @@
 package digital.byrd.fightclub.generator;
 
-import digital.byrd.fightclub.commands.Murder;
 import digital.byrd.fightclub.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -19,7 +18,7 @@ import java.util.stream.Stream;
 
 public class InitialGenerator {
     private final Random rand = new Random();
-    private Utils utils = new Utils();
+    private final Utils utils = new Utils();
 
     public List<ItemStack> makeInitialStorageInventory() {
         List<ItemStack> weapons = this.makeWeapons();
@@ -36,7 +35,9 @@ public class InitialGenerator {
         ItemStack ammo = new ItemStack(Material.ARROW, 64);
         ItemStack blocks =  new ItemStack(Material.COBBLESTONE, 64);
         ItemStack gapples = new ItemStack(Material.GOLDEN_APPLE, rand.nextInt(2) + 1);
-        return Arrays.asList(food, ammo, blocks, gapples);
+        ItemStack iron = new ItemStack(Material.IRON_INGOT, 6);
+        ItemStack workbench = new ItemStack(Material.WORKBENCH);
+        return Arrays.asList(food, blocks, gapples, iron, workbench, ammo);
     }
 
     private List<ItemStack> makeTools() {
@@ -44,9 +45,7 @@ public class InitialGenerator {
         ItemStack axe = new ItemStack(Material.DIAMOND_AXE);
         ItemStack shovel = new ItemStack(Material.DIAMOND_SPADE);
         List<ItemStack> tools = new ArrayList<>(Arrays.asList(pick, axe, shovel));
-        tools.forEach(tool -> {
-            tool.addEnchantment(Enchantment.DIG_SPEED, 1);
-        });
+        tools.forEach(tool -> tool.addEnchantment(Enchantment.DIG_SPEED, 1));
         ItemStack waterBucket = new ItemStack(Material.WATER_BUCKET);
         tools.add(waterBucket);
         return tools;
@@ -54,12 +53,12 @@ public class InitialGenerator {
 
     private List<ItemStack> makeWeapons() {
         ItemStack bow = new ItemStack(Material.BOW);
-        bow.addEnchantment(Enchantment.ARROW_DAMAGE, rand.nextInt(3) + 1);
+        bow.addEnchantment(Enchantment.ARROW_DAMAGE, rand.nextInt(2) + 1);
 
         ItemStack sword = chooseOne(Material.DIAMOND_SWORD, Material.IRON_SWORD);
-        sword.addEnchantment(Enchantment.DAMAGE_ALL, rand.nextInt(3) + 1);
+        sword.addEnchantment(Enchantment.DAMAGE_ALL, rand.nextInt(2) + 1);
 
-        return Arrays.asList(bow, sword);
+        return Arrays.asList(sword, bow);
     }
 
     public Map<String, ItemStack> makeArmor() {
@@ -70,9 +69,9 @@ public class InitialGenerator {
         armor.put("boots", chooseOne(Material.DIAMOND_BOOTS, Material.IRON_BOOTS));
         armor.values().forEach(item -> {
             if (rand.nextInt(2) == 0) {
-                item.addEnchantment(Enchantment.PROTECTION_PROJECTILE, rand.nextInt(3) + 1);
+                item.addEnchantment(Enchantment.PROTECTION_PROJECTILE, rand.nextInt(2) + 1);
             } else {
-                item.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, rand.nextInt(3) + 1);
+                item.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, rand.nextInt(2) + 1);
             }
         });
         return armor;

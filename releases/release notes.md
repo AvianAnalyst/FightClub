@@ -9,11 +9,11 @@
 * /murder now heals you 
 * You don't need to manually call /murder when you respawn anymore
 * Equipment enchantments rebalancing
-  * TODO: No longer able to get enchantments > level 2 on initial inventory generation
-  * TODO: players now drop 10 xp on death
-  * TODO: Players also get 6 iron on initial inventory generation 
-  * TODO: Players drop half their iron on death
-  * TOOD: Players also get a crafting bench 
+  * No longer able to get enchantments > level 2 on initial inventory generation
+  * players now drop 10 xp on death
+  * Players also get 6 iron on initial inventory generation 
+  * Players drop half their iron, rounded up on death with potential for bonus up to one less than their total iron
+  * Players also get a crafting table 
 ## Bug fixes
 * armor slots dont clear on /murder 
 * /murder no longer requires OP permissions

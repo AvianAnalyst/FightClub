@@ -27,6 +27,7 @@ public class Listener implements org.bukkit.event.Listener {
         List<ItemStack> desiredDrops = dropGenerator.chooseDrops(drops);
         drops.clear();
         drops.addAll(desiredDrops);
+        event.setDroppedExp(10);
     }
 
     @EventHandler

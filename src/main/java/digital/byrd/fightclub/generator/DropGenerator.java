@@ -1,5 +1,6 @@
 package digital.byrd.fightclub.generator;
 
+import digital.byrd.fightclub.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -19,16 +20,20 @@ import java.util.stream.Collectors;
 public class DropGenerator {
     private final Random rand = new Random();
     private final Logger logger = getLogger();
+    private final Utils utils = new Utils();
 
     public List<ItemStack> chooseDrops(List<ItemStack> drops) {
-        Map<Integer, List<ItemStack>> sortedItems = sortItems(drops);
+        Map<Integer, List<ItemStack>> sortedItems = sortTiers(drops);
         logger.info(String.valueOf(sortedItems.size()));
         Integer highestTier = sortedItems.keySet().stream().mapToInt(v -> v).max().orElse(0);
         List<ItemStack> highestTierItems = sortedItems.get(highestTier);
+        int totalDroppedIron = getTotalDroppedIron(drops);
+
         if (highestTierItems == null) {
             return Arrays.asList(
                     new ItemStack(Material.ARROW, 32),
-                    new ItemStack(Material.GOLDEN_APPLE, rand.nextInt(2) + 1)
+                    new ItemStack(Material.GOLDEN_APPLE, rand.nextInt(2) + 1),
+                    new ItemStack(Material.IRON_INGOT, totalDroppedIron)
                             );
         }
         ItemStack gear1 = null;
@@ -49,12 +54,25 @@ public class DropGenerator {
         return Arrays.asList(
                 new ItemStack(Material.ARROW, 32),
                 new ItemStack(Material.GOLDEN_APPLE, rand.nextInt(2) + 1),
+                new ItemStack(Material.IRON_INGOT, totalDroppedIron),
                 gear1,
                 gear2
         );
     }
 
-    private Map<Integer, List<ItemStack>> sortItems(List<ItemStack> inventory) {
+    private Integer getTotalDroppedIron(List<ItemStack> drops) {
+        Integer ironCount = utils.getItemCount(drops, Material.IRON_INGOT);
+        if (ironCount == 0) {
+            return 0;
+        }
+        Integer baseIronDropAmount = (int) Math.ceil(ironCount / 2.0);
+        int remainingIron = ironCount - baseIronDropAmount;
+        // max = n-1
+        Integer bonusDrop = rand.nextInt(remainingIron);
+        return baseIronDropAmount + bonusDrop;
+    }
+
+    private Map<Integer, List<ItemStack>> sortTiers(List<ItemStack> inventory) {
 
         Map<Integer, List<ItemStack>> sortedItems = new HashMap<>();
         inventory.forEach(itemStack -> {

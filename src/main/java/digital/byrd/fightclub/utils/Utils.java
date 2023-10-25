@@ -1,5 +1,6 @@
 package digital.byrd.fightclub.utils;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -14,5 +15,15 @@ public class Utils {
     }
     public final List<ItemStack> itemStacksToList(ItemStack[] items) {
         return Arrays.stream(items).collect(Collectors.toList());
+    }
+
+    public Integer getItemCount(List<ItemStack> drops, Material itemType) {
+        Integer count = 0;
+        for (ItemStack itemStack : drops) {
+            if(itemStack.getType().equals(itemType)){
+                count += itemStack.getAmount();
+            }
+        }
+        return count;
     }
 }
